@@ -6,10 +6,8 @@ An app to watch random world-record speedruns, built with React.
 
 git clone
 
+cd anypercent
+
 npm install
 
 npm start
-
-## Demo
-
-To view a working demo, head over to anypercent.surge.sh
