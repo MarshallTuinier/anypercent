@@ -44,8 +44,9 @@ class App extends Component {
     let gameId = this.state.gameList[Math.floor(Math.random() * this.state.gameList.length)].id;
 
     //If potentialId was passed to the function, assign our gameId to that param
-    if (potentialId.length === 1) {
-      gameId = potentialId;
+    console.log(potentialId)
+    if (typeof potentialId[0] === 'string') {
+      gameId = potentialId[0];
     }
 
     //Fetch the data of the randomly selected game
