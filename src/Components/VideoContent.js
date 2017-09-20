@@ -1,7 +1,7 @@
 import React from "react";
 import parseUrl from "parse-url";
 import RunData from "./RunData";
-
+import placeholderImage from "../Assets/placeholderImage.png";
 const VideoContent = props => {
   //The VideoConent object gets the URL from out data, and displays the video
   //However, our data from the API comes from multiple video sources (twitch/Youtube)
@@ -38,7 +38,7 @@ const VideoContent = props => {
         */}
         <img
           className="ratio"
-          src="http://placehold.it/16x9"
+          src={placeholderImage}
           alt="Placeholder for resizing video. Ignore this!"
         />
 
