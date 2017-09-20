@@ -14,4 +14,4 @@ npm start
 
 ## Demo
 
-To view a working demo, head to (http://anypercent.surge.sh).
+To view a working demo, head to (http://anypercent.com)
