@@ -14,4 +14,4 @@ npm start
 
 ## Demo
 
-To view a working demo, head to (http://anypercent.com)
+To view a working demo, head to (http://anypercent.netlify.com)
