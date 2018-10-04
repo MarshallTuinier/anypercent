@@ -2,13 +2,16 @@ import React from "react";
 import timeChanger from "../Utils/timeChanger";
 import { fetchRunnerData, fetchCategory } from "../Utils/api";
 import RunInfo from "./RunInfo";
+import ReactLoading from "react-loading";
+
 class RunData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       runnerData: null,
       categoryData: null,
-      navObj: {}
+      navObj: {},
+      loading: true
     };
   }
 
@@ -54,7 +57,8 @@ class RunData extends React.Component {
     this.setState({
       runnerData,
       categoryData,
-      navObj: newNavObj
+      navObj: newNavObj,
+      loading: false
     });
   }
 
@@ -65,10 +69,28 @@ class RunData extends React.Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <div
+          className="run-data-container"
+          style={{
+            marginTop: "20px",
+            display: "flex",
+            justifyContent: "space-around"
+          }}
+        >
+          <ReactLoading
+            type="spinningBubbles"
+            color="#5ab9ea"
+            height="100px"
+            width="100px"
+          />
+        </div>
+      );
+    }
     return (
       <div className="run-data-container">
-        {this.state.runnerData &&
-          this.state.categoryData && <RunInfo>{this.state.navObj}</RunInfo>}
+        <RunInfo>{this.state.navObj}</RunInfo>
       </div>
     );
   }
