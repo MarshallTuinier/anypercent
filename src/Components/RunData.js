@@ -14,10 +14,13 @@ class RunData extends React.Component {
 
   async componentDidMount() {
     //Here we fetch data for the runner/streamer, as this is contained in a seperate endpoint than the game information
-
-    const runnerData = await fetchRunnerData(
-      this.props.runInfo[0].runs[0].run.players[0].uri.slice(8)
-    );
+    //Fetch all the information for the run category (Any%, 100%, etc)
+    //The run category information is given to us in the shape of an ID and
+    //We need to make a seperate API call to get the actual string name
+    const [categoryData, runnerData] = await Promise.all([
+      fetchCategory(this.props.runInfo[0].category),
+      fetchRunnerData(this.props.runInfo[0].runs[0].run.players[0].uri.slice(8))
+    ]);
 
     let newNavObj = this.state.navObj;
     newNavObj.gameName = this.props.gameInfo.names.twitch;
@@ -46,11 +49,6 @@ class RunData extends React.Component {
       newNavObj.twtichLink = "#";
     }
 
-    //Fetch all the information for the run category (Any%, 100%, etc)
-    //The run category information is given to us in the shape of an ID and
-    //We need to make a seperate API call to get the actual string name
-
-    const categoryData = await fetchCategory(this.props.runInfo[0].category);
     newNavObj.categoryName = categoryData.name;
 
     this.setState({

@@ -67,7 +67,7 @@ class App extends Component {
     }
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     //Here we define our listFetcher helper function, using a fetchGameList helper from the Utils folder.
     //This will populate our gameList state with all the potential games to choose from.
     const listFetcher = async url => {
