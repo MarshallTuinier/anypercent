@@ -8,7 +8,7 @@
 }
 
 html {
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   color: #e6e6e6;
   background-color: #1a1a1d;
 }
@@ -23,7 +23,7 @@ h1 {
 
 h2 {
   font-size: 30px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
 }
 
 p {
@@ -74,6 +74,7 @@ a {
 .button-container {
   margin: 0 auto;
 }
+
 .button {
   color: #e6e6e6;
   background: #e46b2d;
@@ -85,7 +86,9 @@ a {
   padding: 10px 0;
   margin: 10px auto;
   border: none;
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
+  display: flex;
+  justify-content: space-around;
 }
 
 .button:enabled {

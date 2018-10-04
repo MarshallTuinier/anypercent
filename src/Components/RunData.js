@@ -11,53 +11,52 @@ class RunData extends React.Component {
       navObj: {}
     };
   }
-  componentDidMount() {
+
+  async componentDidMount() {
     //Here we fetch data for the runner/streamer, as this is contained in a seperate endpoint than the game information
-    fetchRunnerData(
-      //grab the url from this particular run
+
+    const runnerData = await fetchRunnerData(
       this.props.runInfo[0].runs[0].run.players[0].uri.slice(8)
-    ).then(data => {
-      let newNavObj = this.state.navObj;
-      newNavObj.gameName = this.props.gameInfo.names.twitch;
+    );
 
-      //Property check to ensure the runner has a name
-      if (data.hasOwnProperty("names")) {
-        newNavObj.runnerName = data.names.international;
-      } else {
-        newNavObj.runnerName = data.name;
-      }
+    let newNavObj = this.state.navObj;
+    newNavObj.gameName = this.props.gameInfo.names.twitch;
 
-      //Convert the run time in seconds to HH:MM:SS
-      newNavObj.time = timeChanger(
-        this.props.runInfo[0].runs[0].run.times.primary_t
-      );
-      newNavObj.gameId = this.props.gameId;
+    //Property check to ensure the runner has a name
+    if (runnerData.hasOwnProperty("names")) {
+      newNavObj.runnerName = runnerData.names.international;
+    } else {
+      newNavObj.runnerName = runnerData.name;
+    }
 
-      //Link to the runners speedrun database
-      newNavObj.siteLink = data.weblink;
+    //Convert the run time in seconds to HH:MM:SS
+    newNavObj.time = timeChanger(
+      this.props.runInfo[0].runs[0].run.times.primary_t
+    );
 
-      //Link to the runners Twitch account
-      if (!!data.twitch) {
-        newNavObj.twitchLink = data.twitch.uri;
-      } else {
-        newNavObj.twtichLink = "#";
-      }
-      this.setState({
-        runnerData: data,
-        navObj: newNavObj
-      });
-    });
+    newNavObj.gameId = this.props.gameId;
+
+    //Link to the runners speedrun database
+    newNavObj.siteLink = runnerData.weblink;
+
+    //Link to the runners Twitch account
+    if (!!runnerData.twitch) {
+      newNavObj.twitchLink = runnerData.twitch.uri;
+    } else {
+      newNavObj.twtichLink = "#";
+    }
 
     //Fetch all the information for the run category (Any%, 100%, etc)
     //The run category information is given to us in the shape of an ID and
     //We need to make a seperate API call to get the actual string name
-    fetchCategory(this.props.runInfo[0].category).then(data => {
-      let newNavObj = this.state.navObj;
-      newNavObj.categoryName = data.name;
-      this.setState({
-        categoryData: data,
-        navObj: newNavObj
-      });
+
+    const categoryData = await fetchCategory(this.props.runInfo[0].category);
+    newNavObj.categoryName = categoryData.name;
+
+    this.setState({
+      runnerData,
+      categoryData,
+      navObj: newNavObj
     });
   }
 
@@ -71,10 +70,7 @@ class RunData extends React.Component {
     return (
       <div className="run-data-container">
         {this.state.runnerData &&
-          this.state.categoryData &&
-          <RunInfo>
-            {this.state.navObj}
-          </RunInfo>}
+          this.state.categoryData && <RunInfo>{this.state.navObj}</RunInfo>}
       </div>
     );
   }
